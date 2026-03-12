@@ -11,7 +11,15 @@ public class TodoService
         {
             return false;
         }
-        Todo test = new Todo(todo);
+
+        using var context = new DbCon();
+
+        var item = new Todo(todo);
+
+        context.Add(item);
+        context.SaveChanges();
+
+        // Todo test = new Todo(todo);
 
         return true;
 

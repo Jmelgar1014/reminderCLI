@@ -21,6 +21,7 @@ public class TodoHandler
 
     private bool AddTodoPrompt()
     {
+
         string todo = AnsiConsole.Ask<string>("Enter a Todo:");
 
         if(!_service.AddTodo(todo))
@@ -36,7 +37,7 @@ public class TodoHandler
 
         while(true)
         {
-            string choice = AnsiConsole.Prompt(new SelectionPrompt<string>().AddChoices(StateOptions.AddOptions.Keys));
+            string choice = AnsiConsole.Prompt(new SelectionPrompt<string>().AddChoices(StateOptions.AddOptions.Keys).HighlightStyle(new Style(Color.Black,Color.Green1,Decoration.Italic)));
 
             if(choice == "Back to Main Menu")
             {
@@ -47,14 +48,10 @@ public class TodoHandler
             {
                 if(AddTodoPrompt())
                 {
-                    AnsiConsole.MarkupLine("[green]Todo has been successfully added.[/]");
+                    AnsiConsole.MarkupLine("[green]Todo has been successfully added.[/]\n");
                     continue;
                 }
-
-
             }
-        
-
             
         }        
     }

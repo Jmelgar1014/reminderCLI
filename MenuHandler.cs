@@ -33,7 +33,7 @@ public class MenuHandler
 
     private string GetChoice()
     {
-        return AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Select from any of the options below:").AddChoices(StateOptions.MainOptions.Keys));
+        return AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Select from any of the options below:").AddChoices(StateOptions.MainOptions.Keys).HighlightStyle(new Style(Color.Black,Color.Green1,Decoration.Italic)));
     }
 
 }
