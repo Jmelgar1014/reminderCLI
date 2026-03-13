@@ -25,6 +25,10 @@ public class MenuHandler
                 _handler.AddTodo();
                 break;
 
+                case "View Todos":
+                _handler.GetAllTodos();
+                break;
+
 
             }
 

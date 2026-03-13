@@ -6,6 +6,7 @@ public class StateOptions
 {
 
     public enum MenuOptions {
+        ViewAll,
         AddTodo,
         EditTodo,
         DeleteTodo,
@@ -27,6 +28,7 @@ public class StateOptions
 
     public static Dictionary<string, MenuOptions> MainOptions = new()
     {
+        {"View Todos", MenuOptions.ViewAll},
         {"Add Todo", MenuOptions.AddTodo},
         {"Edit Todo", MenuOptions.EditTodo},
         {"Delete Todo", MenuOptions.DeleteTodo},

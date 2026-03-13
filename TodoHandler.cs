@@ -8,6 +8,17 @@ public class TodoHandler
 
     private TodoService _service = new();
 
+
+    public void GetAllTodos()
+    {
+        List<Todo> items = _service.GetAllTodos();
+
+        foreach(Todo item in items)
+        {
+            AnsiConsole.MarkupLine($"[blue]{item.TodoName} - {item.Date} - {item.ReminderFrequency}[/]\n");
+        }
+    }
+
     public void AddTodo()
     {
         if(!AddTodoPrompt())return;
@@ -24,7 +35,16 @@ public class TodoHandler
 
         string todo = AnsiConsole.Ask<string>("Enter a Todo:");
 
-        if(!_service.AddTodo(todo))
+        DateTime dueDate = AnsiConsole.Ask<DateTime>("Enter Todo Date:");
+
+        string reminderFreq = AnsiConsole.Prompt(new SelectionPrompt<string>().AddChoices("Daily", "Weekly","Monthly"));
+
+
+        Todo item = new Todo(todo, dueDate, reminderFreq);
+
+        
+
+        if(!_service.AddTodo(item))
         {
             AnsiConsole.MarkupLine("[red]Todo cannot be empty.[/]\n");
             return false;
