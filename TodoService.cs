@@ -25,4 +25,23 @@ public class TodoService
         return context.Todos.ToList();
     }
 
+    public bool DeleteTodo(int id)
+    {
+        using var context = new DbCon();
+
+        var items = context.Todos.Where(x => x.Id == id);
+
+        var item = items.First();
+        if(item != null)
+        {
+            
+         context.Todos.Remove(item);
+         context.SaveChanges();
+         return true;
+        }
+
+        return false;
+
+    }
+
 }

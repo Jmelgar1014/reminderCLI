@@ -29,6 +29,10 @@ public class MenuHandler
                 _handler.GetAllTodos();
                 break;
 
+                case "Delete Todo":
+                _handler.DeleteTodo();
+                break;
+
 
             }
 

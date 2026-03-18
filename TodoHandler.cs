@@ -29,6 +29,26 @@ public class TodoHandler
 
     }
 
+    public void DeleteTodo()
+    {
+        List<Todo> items = _service.GetAllTodos();
+
+        List<string> todos = new List<string>();
+
+        var test = new Dictionary<int, string>();
+
+        foreach(Todo item in items)
+        {
+            test.Add(item.Id,item.TodoName);
+        }
+
+        var todo = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Select a Todo to delete:").AddChoices(test.Values));
+
+        var key = test.FirstOrDefault(x => x.Value == todo).Key;
+
+        _service.DeleteTodo(key);
+    }
+
 
     private bool AddTodoPrompt()
     {
