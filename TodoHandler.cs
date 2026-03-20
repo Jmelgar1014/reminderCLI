@@ -11,7 +11,13 @@ public class TodoHandler
 
     public void GetAllTodos()
     {
+
         List<Todo> items = _service.GetAllTodos();
+
+        if(items.Count == 0)
+        {
+            AnsiConsole.MarkupLine("[yellow]\nThere are no todos[/]\n");
+        }
 
         foreach(Todo item in items)
         {
@@ -29,25 +35,79 @@ public class TodoHandler
 
     }
 
-    public void DeleteTodo()
+    public int DeleteTodoSelection()
     {
         List<Todo> items = _service.GetAllTodos();
 
-        List<string> todos = new List<string>();
+        if(items.Count == 0)
+        {
+            return -1;
+        }
 
-        var test = new Dictionary<int, string>();
+        // List<string> todos = new List<string>();
+
+        var todoDetails = new Dictionary<int, string>();
 
         foreach(Todo item in items)
         {
-            test.Add(item.Id,item.TodoName);
+            todoDetails.Add(item.Id,item.TodoName);
         }
 
-        var todo = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Select a Todo to delete:").AddChoices(test.Values));
+        var todo = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Select a Todo to delete:").AddChoices(todoDetails.Values).HighlightStyle(new Style(Color.Black,Color.Green1,Decoration.Italic)));
 
-        var key = test.FirstOrDefault(x => x.Value == todo).Key;
 
-        _service.DeleteTodo(key);
+        var key = todoDetails.FirstOrDefault(x => x.Value == todo).Key;
+
+        return key;
     }
+
+    public bool DeleteTodo()
+    {
+
+        int key = DeleteTodoSelection();
+        
+        if(!_service.DeleteTodo(key))
+        {
+            AnsiConsole.MarkupLine($"[red]Todos could not be found.[/]");
+            return false;
+        }
+        else
+        {
+
+            AnsiConsole.MarkupLine($"[green]Todo has been successfully deleted[/]\n");
+            
+            DeleteTodoChoice();
+
+            return true;
+        }
+
+    }
+
+    private void DeleteTodoChoice()
+    {
+        while(true)
+        {
+            string choice = AnsiConsole.Prompt(new SelectionPrompt<string>().AddChoices(StateOptions.DeleteOptions.Keys).HighlightStyle(new Style(Color.Black,Color.Green1,Decoration.Italic)));
+
+            if(choice == "Back to Main Menu")
+            {
+                break;
+            }
+
+            if(choice == "Delete New Todo")
+            {
+                if(DeleteTodo())
+                {
+                    AnsiConsole.MarkupLine("[green]Todo has been successfully been deleted.[/]\n");
+                    continue;
+                }
+            }
+        }
+
+        
+    }
+
+
 
 
     private bool AddTodoPrompt()

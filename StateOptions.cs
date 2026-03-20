@@ -19,6 +19,12 @@ public class StateOptions
         Back
     }
 
+    public enum DeleteMenu
+    {
+        DeleteNewTodo,
+        Back
+    }
+
     public static Dictionary<string,AddMenu> AddOptions = new()
     {
         {"Add New Todo",AddMenu.AddNewTodo},
@@ -33,5 +39,11 @@ public class StateOptions
         {"Edit Todo", MenuOptions.EditTodo},
         {"Delete Todo", MenuOptions.DeleteTodo},
         {"Exit", MenuOptions.Exit}
+    };
+
+    public static Dictionary<string,DeleteMenu> DeleteOptions = new()
+    {
+        {"Delete New Todo", DeleteMenu.DeleteNewTodo},
+        {"Back to Main Menu", DeleteMenu.Back}
     };
 }

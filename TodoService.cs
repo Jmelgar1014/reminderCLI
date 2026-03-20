@@ -27,11 +27,16 @@ public class TodoService
 
     public bool DeleteTodo(int id)
     {
+
+        if(id == -1)
+        {
+            return false;
+        }
         using var context = new DbCon();
 
-        var items = context.Todos.Where(x => x.Id == id);
+        var item = context.Todos.Find(id);
 
-        var item = items.First();
+        // var item = items.FirstOrDefault();
         if(item != null)
         {
             
