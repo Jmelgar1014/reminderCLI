@@ -1,4 +1,5 @@
 using System;
+using Spectre.Console;
 
 namespace ReminderCLI;
 
@@ -43,6 +44,34 @@ public class TodoService
          context.Todos.Remove(item);
          context.SaveChanges();
          return true;
+        }
+
+        return false;
+
+    }
+
+    public bool EditTodo(int id, string todo, DateTime date, string frequency)
+    {
+
+        if(id == -1)
+        {
+            return false;
+        }
+        using var context = new DbCon();
+
+        var item = context.Todos.Find(id);
+        
+        Console.WriteLine(item);
+
+        // var item = items.FirstOrDefault();
+        if(item != null)
+        {
+            item.TodoName = todo;
+            item.Date = date;
+            item.ReminderFrequency = frequency;
+            
+            context.SaveChanges();
+            return true;
         }
 
         return false;

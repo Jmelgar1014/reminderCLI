@@ -33,6 +33,10 @@ public class MenuHandler
                 _handler.DeleteTodo();
                 break;
 
+                case "Edit Todo":
+                _handler.EditTodo();
+                break;
+
 
             }
 
